@@ -39,9 +39,9 @@
                         pzhAddress = $("input:radio[name='availablePZHs']:checked").val().trim();
                     }
                     if (pzhAddress.length > 0){ // If we have a host
-                        if (pzhAddress.toLowerCase()=="localhost"){
-                            $("#errorMessage").html("localhost is not supported as a pzh host name. Use 127.0.0.1 instead");
-                            $("#customOptionUrl").val("127.0.0.1");
+                        if (pzhAddress.toLowerCase()=="localhost" || pzhAddress=="127.0.0.1"){
+                            $("#errorMessage").html("localhost or 127.0.0.1 is not supported as a pzh host. Use your ip (public or private) instead");
+                            $("#customOptionUrl").val("");
                             $("#showError").click();
                         }else{
                             // Prepare PZP to register to pzh
@@ -140,7 +140,7 @@
     <div data-role="content" class="centered">
         <p>You have already registered to the following PZH</p>
         <p id="pzhName"></p>
-        <p>Registration to multiple PZHs is not supported. Consider deleting webinos configuration and starting over again.</p>
+        <p>Registration to multiple PZHs is not supported.<br/>Consider deleting webinos configuration and starting over again.</p>
 		<a href="#resetDialog" data-role="button" data-rel="dialog">
             Reset your device
         </a>
@@ -168,6 +168,7 @@
         </a>
     </div>
     <div data-role="content">
+        <p>Please select you Personal Zone Hub (PZH) provider where you want to enrol your device (PZP)</p>
         <div data-role="fieldcontain">
             <fieldset data-role="controlgroup" data-type="vertical">
                 <legend>
@@ -185,9 +186,9 @@
         </div>
         <div data-role="fieldcontain" id="customOptionPanel">
             <label for="customOptionUrl">
-                Custom url
+                Custom PZH
             </label>
-            <input name="" id="customOptionUrl" placeholder="e.g. 127.0.0.1 or pzh.webinos.org" value="" type="text" />
+            <input name="" id="customOptionUrl" placeholder="e.g. 192.168.0.2 or pzh.webinos.org" value="" type="text" />
         </div>
         <a data-role="button" id="cmdRegister">
             Register to your PZH

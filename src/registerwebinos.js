@@ -35,6 +35,18 @@ function initWebinos(callbackFn) {
     }
 }
 
+function GetPzhHost(data){
+    var output = '';
+    // If the information is there
+    if (data && data.payload && data.payload.message && data.payload.message.connectedPzh && data.payload.message.connectedPzh.length>0){
+        output = data.payload.message.connectedPzh[0];
+        if (output.indexOf("_")>0){
+            output = output.split("_")[0];
+        }
+    }
+    return output;
+}
+
 function webinosLoaded(callbackFn){
     if (typeof(callbackFn) == "function"){ //If we do care to be notified when webinos is loaded
         // Wait for webinos to initialize
@@ -46,7 +58,10 @@ function webinosLoaded(callbackFn){
                     break;
                 case "connected":
                     // connected to hub
-                    callbackFn({pzhExists: true,pzhName: data.from});
+                    var pzhHost = GetPzhHost(data);
+                    if (pzhHost.length==0) // If we failed to recognize a pzh
+                        pzhHost = data.from; // Set it to the name of the incoming message
+                    callbackFn({pzhExists: true,pzhName: pzhHost});
                     break;
             }
         });
