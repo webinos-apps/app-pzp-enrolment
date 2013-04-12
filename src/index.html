@@ -55,12 +55,44 @@
                         $("#showError").click();
                     }
                 })
+            }else if (e.target.id=="resetDialog"){
+				//Hook up rest functionality
+				$("#cmdReset").click(function(){
+                    // Reset device
+					var options = {type: 'prop', payload: {status:'resetDevice'}};
+					webinos.session.message_send(options);
+                    // and go to register page
+                    $.mobile.changePage("#selectProvider");
+				});
+			}else if (e.target.id=="Settings"){
+                //Hookup event
+                $("#cmdSaveSettings").click(function(){
+                    var newName = $("#deviceName").val().trim();
+                    if (newName.length>0){
+                        // Save
+                        var options = {"type": 'prop', "payload":{"status": "setFriendlyName", value: newName}};
+                        webinos.session.message_send(options, webinos.session.getPZPId());
+                        // and go back
+                        $.mobile.changePage("#selectProvider");
+                    }else{
+                        $("#errorMessage").html("Device name can not be empty!");
+                        $("#showSettingsError").click();
+                    }
+                });
+                //Friendly name response
+                webinos.session.addListener('friendlyName', function(msg){
+                    $("#deviceName").val(msg.payload.message);
+                });
             }
         });
         $(document).bind('pageshow',function(e){
             if (e.target.id=="selectProvider"){
                 // Enable the button every time you show the page (in the case of an error)
                 $("#cmdRegister").removeAttr('disabled');
+            }else if (e.target.id=="Settings"){
+                // Set the pzp name
+                var options = {"type": 'prop', "payload":{"status": "getFriendlyName"}};
+                webinos.session.message_send(options, webinos.session.getPZPId());
             }
         });
 
@@ -109,6 +141,21 @@
         <p>You have already registered to the following PZH</p>
         <p id="pzhName"></p>
         <p>Registration to multiple PZHs is not supported. Consider deleting webinos configuration and starting over again.</p>
+		<a href="#resetDialog" data-role="button" data-rel="dialog">
+            Reset your device
+        </a>
+    </div>
+</div>
+<div data-role="page" id="resetDialog">
+    <div data-role="content">
+        <div style="text-align:center;">
+            <p><b>Are you sure you want to reset your device?</b></p>
+            <a data-role="button" id="cmdReset">
+                Yes, I understand that all my certificates will be deleted.
+            </a>
+            <br/>
+            <a href="#" data-role="button" data-rel="back">No, I was just playing around</a>
+        </div>
     </div>
 </div>
 <div data-role="page" id="selectProvider">
@@ -116,6 +163,9 @@
         <h3>
             Register with PZH
         </h3>
+        <a data-role="button" href="#Settings" data-icon="gear" data-iconpos="left" class="ui-btn-right">
+            Settings
+        </a>
     </div>
     <div data-role="content">
         <div data-role="fieldcontain">
@@ -151,6 +201,28 @@
             <p id="errorMessage">An error occurred</p>
             <a href="#"  data-role="button" data-rel="back">Ok</a>
         </div>
+    </div>
+</div>
+<div data-role="page" id="Settings">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#selectProvider" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Back
+        </a>
+        <h3>
+            Settings
+        </h3>
+    </div>
+    <div data-role="content">
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup">
+                <label for="deviceName">
+                    Device name
+                </label>
+                <input id="deviceName" placeholder="" value="" type="text"/>
+            </fieldset>
+        </div>
+        <input type="button" id="cmdSaveSettings" value="Save settings"/>
+        <a data-rel="dialog" data-role="button" href="#errorDialog" style="display:none" id="showSettingsError"></a>
     </div>
 </div>
 </body>
