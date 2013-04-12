@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ant script to package the widget -->
+<project name="app-pzp-enrolment" default="gen-wgt" basedir="./">
+	<target name="gen-wgt" depends="clean">
+		<!-- Creates the widget -->
+		<zip destfile="${basedir}/${ant.project.name}.wgt">
+			<zipfileset dir="${basedir}/src" 
+			includes="
+				config.xml,
+				enrol.png,
+				index.html,
+				registerwebinos.js,
+				webinos.js,
+				jquery/" 
+			excludes="
+				**/.gitignore" />
+		</zip>
+	</target>
+
+	<target name="clean">
+		<!-- Removes precompiled widget -->
+		<delete file="${basedir}/${ant.project.name}.wgt" />
+	</target>
+</project>

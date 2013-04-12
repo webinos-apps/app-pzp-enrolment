@@ -1,0 +1,1 @@
+## webinos PZP enrolment widgetThis widget makes it easy to enrol your device to your local Personal Zone Hub. It's mobile optimized. ### PackagingJust run ant in the root of the repository.

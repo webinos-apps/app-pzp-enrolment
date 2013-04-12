@@ -1,0 +1,1 @@
+This is the result of the widget being installed by webinos.Source code is not the latest one.

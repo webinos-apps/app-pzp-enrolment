@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.webinos.org/app-pzp-enrolment" version="1.0" height="400" width="400">
+  <!-- Name of the widget -->
+  <name short="enrol pzp">Enrol PZP to PZH</name>
+  <!-- Description is shown when installing widget -->
+  <description>Easily enrol your device to your own Personal Zone Hub</description>
+  <!-- Start page for widget -->
+  <content src="index.html" />
+  <!-- Default icon for widget -->
+  <icon src="enrol.png" />
+  <!-- Widget author -->
+  <author href="http://www.webinos.org" email="abot@epu.ntua.gr">Andreas Botsikas</author>
+  <!-- No webinos feature is required -->
+  <!-- Distributed under the Apache 2.0 licence -->
+  <license href="http://www.apache.org/licenses/LICENSE-2.0.html">Distributed under the Apache 2.0 License.</license>
+</widget>
