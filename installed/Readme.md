@@ -1,1 +1,1 @@
-This is the result of the widget being installed by webinos.Source code is not the latest one.
+This is the result of the widget being installed by webinos.This folder contains only the artifacts generated during installation.Source code is copied over from the src folder with the ant task in the root.

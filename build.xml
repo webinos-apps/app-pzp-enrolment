@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Ant script to package the widget -->
-<project name="app-pzp-enrolment" default="gen-wgt" basedir="./">
+<project name="app-pzp-enrolment" default="make-all" basedir="./">
 	<target name="gen-wgt" depends="clean">
 		<!-- Creates the widget -->
 		<zip destfile="${basedir}/${ant.project.name}.wgt">
@@ -20,5 +20,19 @@
 	<target name="clean">
 		<!-- Removes precompiled widget -->
 		<delete file="${basedir}/${ant.project.name}.wgt" />
+		<!-- Clean up widget files -->
+		<delete includeEmptyDirs="true">
+			<fileset dir="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/wgt" includes="**/*"/>
+		</delete>
+		<delete file="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/.wgt"/>
 	</target>
+	
+	<target name="make-all" depends="gen-wgt">
+		<!-- Copy source files in the install dir -->
+		<copy todir="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/wgt">
+			<fileset dir="${basedir}/src"/>
+		</copy>
+		<copy file="${basedir}/${ant.project.name}.wgt" tofile="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/.wgt"/>
+	</target>
+	
 </project>

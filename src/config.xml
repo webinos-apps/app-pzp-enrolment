@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.webinos.org/app-pzp-enrolment" version="1.0" height="400" width="400">
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.webinos.org/app-pzp-enrolment" version="1.0" height="450" width="400">
   <!-- Name of the widget -->
   <name short="enrol pzp">Enrol PZP to PZH</name>
   <!-- Description is shown when installing widget -->
