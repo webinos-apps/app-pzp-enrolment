@@ -61,7 +61,7 @@
                     // Reset device
 					var options = {type: 'prop', payload: {status:'resetDevice'}};
 					webinos.session.message_send(options);
-                    // and reload the widget after 500ms
+                    // and reload the widget after 500ms to refresh the session
                     setTimeout("document.location.reload(true);", 500);
 				});
 			}else if (e.target.id=="Settings"){
@@ -72,14 +72,14 @@
                         // Save
                         var options = {"type": 'prop', "payload":{"status": "setFriendlyName", value: newName}};
                         webinos.session.message_send(options, webinos.session.getPZPId());
-                        // and go back
-                        $.mobile.changePage("#selectProvider");
+                        // and reload the widget after 500ms to refresh the session
+                        setTimeout("document.location.reload(true);", 500);
                     }else{
                         $("#errorMessage").html("Device name can not be empty!");
                         $("#showSettingsError").click();
                     }
                 });
-                //Friendly name response
+                //Friendly name response hookup
                 webinos.session.addListener('friendlyName', function(msg){
                     $("#deviceName").val(msg.payload.message);
                 });
