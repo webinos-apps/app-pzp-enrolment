@@ -13,7 +13,8 @@
 				webinos.js,
 				jquery/" 
 			excludes="
-				**/.gitignore" />
+				**/.gitignore
+				**/*.iml" />
 		</zip>
 	</target>
 
