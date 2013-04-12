@@ -61,8 +61,8 @@
                     // Reset device
 					var options = {type: 'prop', payload: {status:'resetDevice'}};
 					webinos.session.message_send(options);
-                    // and go to register page
-                    $.mobile.changePage("#selectProvider");
+                    // and reload the widget after 500ms
+                    setTimeout("document.location.reload(true);", 500);
 				});
 			}else if (e.target.id=="Settings"){
                 //Hookup event
