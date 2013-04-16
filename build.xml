@@ -24,7 +24,7 @@
 		<!-- Make wgt folder if not already exists -->
 		<mkdir dir="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/wgt" />
 		<!-- Clean up widget files -->
-		<delete includeEmptyDirs="true">
+		<delete includeEmptyDirs="true" quiet="true">
 			<fileset dir="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/wgt" includes="**/*"/>
 		</delete>
 		<delete file="${basedir}/installed/13be5cfb9c336f34de467d6a370e3210c59c5f7f/.wgt"/>
