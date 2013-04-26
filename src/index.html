@@ -12,8 +12,14 @@
     <script src="./jquery/jquery.mobile-1.2.0.min.js"></script>
     <script src="./registerwebinos.js"></script>
     <script>
-        // Ensure that we always start at waitForWebinos
-        document.location.hash = "#waitForWebinos";
+        // Ensure that we always start at waitForWebinos except we are at last enrolment step
+        var finalStepInEnrolment=false;
+        if(location.href.indexOf("finalStep=1")>-1){
+            document.location.hash = "#waitForEnrolCompletion";
+            finalStepInEnrolment=true;
+        }else{
+            document.location.hash = "#waitForWebinos";
+        }
 
         $(document).bind('pageinit', function(e){
             if (e.target.id=="selectProvider"){
@@ -62,7 +68,7 @@
 					var options = {type: 'prop', payload: {status:'resetDevice'}};
 					webinos.session.message_send(options);
                     // and reload the widget after 500ms to refresh the session
-                    setTimeout("document.location.reload(true);", 500);
+                    setTimeout("window.location = window.location.href.split('?')[0];", 500);
 				});
 			}else if (e.target.id=="Settings"){
                 //Hookup event
@@ -73,7 +79,7 @@
                         var options = {"type": 'prop', "payload":{"status": "setFriendlyName", value: newName}};
                         webinos.session.message_send(options, webinos.session.getPZPId());
                         // and reload the widget after 500ms to refresh the session
-                        setTimeout("document.location.reload(true);", 500);
+                        setTimeout("window.location = window.location.href.split('?')[0];", 500);
                     }else{
                         $("#errorMessage").html("Device name can not be empty!");
                         $("#showSettingsError").click();
@@ -105,7 +111,11 @@
                     $("#pzhName").html(result.pzhName);
                     $.mobile.changePage("#alreadyRegistered");
                 }else{
-                    $.mobile.changePage("#selectProvider");
+                    if(!finalStepInEnrolment){
+                        $.mobile.changePage("#selectProvider");
+                    }else{
+                        $("#waitForEnrolCompletion p").html($("#waitForEnrolCompletion p").html()+".")
+                    }
                 }
             });
         });
@@ -128,6 +138,17 @@
     </div>
     <div data-role="content" class="centered">
         <p>Waiting for webinos...</p>
+        <img src="./jquery/images/ajax-loader.gif"/>
+    </div>
+</div>
+<div data-role="page" id="waitForEnrolCompletion">
+    <div data-theme="a" data-role="header">
+        <h3>
+            Register with PZH
+        </h3>
+    </div>
+    <div data-role="content" class="centered">
+        <p>Finalizing enrolment...</p>
         <img src="./jquery/images/ajax-loader.gif"/>
     </div>
 </div>
