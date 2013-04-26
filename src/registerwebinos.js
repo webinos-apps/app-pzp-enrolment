@@ -65,6 +65,21 @@ function webinosLoaded(callbackFn){
                     break;
             }
         });
+        webinos.session.addListener('update', function (data) {
+            switch (data.payload.message.state.hub) {         
+                case "not_connected":
+                    // not connected to hub
+                    callbackFn({pzhExists: false,pzhName: ''});
+                    break;
+                case "connected":
+                    // connected to hub
+                    var pzhHost = GetPzhHost(data);
+                    if (pzhHost.length==0) // If we failed to recognize a pzh
+                        pzhHost = data.from; // Set it to the name of the incoming message
+                    callbackFn({pzhExists: true,pzhName: pzhHost});
+                    break;
+            }
+        });   
         if(webinos.session.getSessionId()!=null){ //If the webinos has already started, force the registerBrowser event
             webinos.session.message_send({type: 'prop', payload: {status:'registerBrowser'}});
         }
